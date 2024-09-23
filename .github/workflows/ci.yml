@@ -47,5 +47,5 @@ jobs:
 
       - name: Tag Image as Latest
         run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/app:latest
