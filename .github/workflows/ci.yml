@@ -24,7 +24,7 @@ jobs:
           
       - name: Run Tests
         run: |
-          python -m unittest discover "./app.py"
+          python -m unittest discover app.py
 
   build_and_push:
     runs-on: ubuntu-latest
