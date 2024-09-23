@@ -42,10 +42,10 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-app:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }}
 
       - name: Tag Image as Latest
         run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/flask-app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/app:latest
