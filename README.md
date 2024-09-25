@@ -37,20 +37,7 @@ The GitHub Actions workflow is triggered every time a new commit is pushed to th
 
 ArgoCD is set up to monitor this repository for changes to the Kubernetes deployment configuration. When changes are detected in the YAML files, ArgoCD automatically syncs the Kubernetes cluster with the updated configuration.
 
-## File Structure
 
-```
-.
-├── .github
-│   └── workflows
-│       └── ci.yml         # GitHub Actions workflow for CI
-├── manifests
-│   └── deployment.yml     # Kubernetes deployment YAML file
-├── Dockerfile             # Dockerfile to build the application
-├── app                    # Source code for the application
-│   └── ...
-└── README.md              # This file
-```
 
 ### CI GitHub Actions Workflow (`ci.yml`)
 
