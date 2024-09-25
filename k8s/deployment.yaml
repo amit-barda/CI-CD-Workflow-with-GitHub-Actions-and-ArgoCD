@@ -3,30 +3,30 @@ kind: Deployment
 metadata:
   name: flask-app
 spec:
-  replicas: 2
+  replicas: 2  # Specifies 2 replicas of the Flask app for high availability
   selector:
     matchLabels:
-      app: flask-app
+      app: flask-app  # Selects pods with the label "app: flask-app"
   template:
     metadata:
       labels:
-        app: flask-app
+        app: flask-app  # Labels the pod with "app: flask-app"
     spec:
       containers:
-        - name: flask-app
-          image: amitbarda2911/flask-app:latest
+        - name: flask-app  # Name of the container running the Flask app
+          image: amitbarda2911/flask-app:latest  # The Docker image to be used
           ports:
-            - containerPort: 5000
+            - containerPort: 5000  # Flask app runs on port 5000 inside the container
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-app
+  name: flask-app  # Name of the service
 spec:
-  type: LoadBalancer
+  type: LoadBalancer  # Exposes the service externally using a LoadBalancer
   selector:
-    app: flask-app
+    app: flask-app  # Selects pods with the label "app: flask-app"
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
+      port: 80  # The port on which the service will be exposed externally
+      targetPort: 5000  # The port inside the container where Flask is running
