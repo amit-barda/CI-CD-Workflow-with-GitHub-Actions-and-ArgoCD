@@ -1,7 +1,8 @@
 persistence:
-  enabled: true
-  storageClass: "standard"
-  size: 10Gi
+  enabled: true  # Enables persistent storage for the application
+  storageClass: "standard"  # Specifies the storage class to use (could be cloud-specific or custom)
+  size: 10Gi  # Requests 10Gi (gigabytes) of storage for the persistent volume
+
 service:
-  type: LoadBalancer
-  externalPort: 9000
+  type: LoadBalancer  # Exposes the service externally through a LoadBalancer
+  externalPort: 9000  # The external port through which the service will be accessible
