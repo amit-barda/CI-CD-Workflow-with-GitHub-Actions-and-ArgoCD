@@ -1,3 +1,4 @@
+![image](https://github.com/user-attachments/assets/ced03372-26a3-471b-94e3-30e0120ed16a)
 
 # CI/CD Workflow with GitHub Actions and ArgoCD
 
@@ -47,47 +48,6 @@ Located in `.github/workflows/ci.yml`, this workflow includes the following step
 2. **Build Docker Image**: Build a new Docker image based on the code in the repository.
 3. **Push to Docker Hub**: Upload the built Docker image to Docker Hub.
 
-#### Example `ci.yml`
-
-```yaml
-name: CI Pipeline
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Run tests
-      run: |
-        # Assuming a Python project, you can customize this for your language
-        pip install -r requirements.txt
-        pytest
-
-  build-and-push:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/your-image-name:latest .
-
-    - name: Push Docker image to Docker Hub
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/your-image-name:latest
-```
 
 ### CD with ArgoCD
 
@@ -98,58 +58,8 @@ The **ArgoCD** setup monitors the repository for changes in the YAML file that d
 
 #### ArgoCD Application Configuration
 
-You will need to create a new ArgoCD application that points to this repository and the `manifests/deployment.yml` file.
+You will need to create a new ArgoCD application that points to this repository and the `k8s/deployment.yml` file.
 
-Here’s an example ArgoCD application YAML:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-app
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: 'https://github.com/your-username/your-repo'
-    targetRevision: HEAD
-    path: manifests
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-```
-
-### Deployment Manifest (`deployment.yml`)
-
-This file defines the Kubernetes deployment and should be placed in the `manifests` directory.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-app
-  labels:
-    app: my-app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-app
-        image: your-dockerhub-username/your-image-name:latest
-        ports:
-        - containerPort: 80
-```
 
 ## How to Use
 
